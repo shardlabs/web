@@ -1,5 +1,4 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon } from "lucide-react";
 
 /**
  * Shared layout configurations
@@ -14,39 +13,44 @@ export function baseOptions(): BaseLayoutProps {
       title: (
         <>
           <svg
-            width="24"
-            height="24"
+            id="Layer_2"
             xmlns="http://www.w3.org/2000/svg"
-            aria-label="Logo"
+            version="1.1"
+            viewBox="0 0 33 44.7"
+            style={{ width: "24px", height: "24px" }}
           >
-            <circle cx={12} cy={12} r={12} fill="currentColor" />
+            <g id="Layer_1-2">
+              <polygon
+                style={{ fill: "#fff" }}
+                points="16.4 0 0 30.8 18.9 12 18.9 4.5 16.4 0"
+              />
+              <polygon
+                style={{ fill: "#fff" }}
+                points="21.5 9.2 21.5 22.6 25.9 17.4 21.5 9.2"
+              />
+              <polygon
+                style={{ fill: "#fff" }}
+                points="18.8 16.4 18.9 25.5 7.7 37.3 2 32.7 18.8 16.4"
+              />
+              <polygon
+                style={{ fill: "#fff" }}
+                points="27.2 20.3 9.8 39 16.8 44.7 18.9 43 18.9 35.2 29.6 24.6 27.2 20.3"
+              />
+              <polygon
+                style={{ fill: "#fff" }}
+                points="30.9 26.8 33 30.8 21.5 40.9 21.5 36.2 30.9 26.8"
+              />
+            </g>
           </svg>
-          My App
+          Shard
         </>
       ),
     },
     // see https://fumadocs.dev/docs/ui/navigation/links
-    links: [
-      {
-        icon: <BookIcon />,
-        text: "Documentation",
-        url: "/docs",
-      },
-      {
-        icon: <BookIcon />,
-        text: "Blog",
-        url: "/blog",
-        // secondary items will be displayed differently on navbar
-        secondary: false,
-      },
-      {
-        icon: <BookIcon />,
-        text: "Roadmap",
-        url: "/roadmap",
-        // secondary items will be displayed differently on navbar
-        secondary: false,
-      },
-    ],
+    links: [],
     githubUrl: "https://github.com/shardlabs/web",
+    themeSwitch: {
+      enabled: false,
+    },
   };
 }
