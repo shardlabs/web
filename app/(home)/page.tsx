@@ -72,7 +72,7 @@ export default function HomePage() {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                         <Link
-                            href="/docs"
+                            href="https://app.shard.sh"
                             className="group px-8 py-4 bg-gradient-to-r from-cyan-600 to-purple-600 rounded-lg font-semibold hover:from-cyan-500 hover:to-purple-500 transition-all duration-300 flex items-center justify-center gap-2"
                         >
                             Open App
