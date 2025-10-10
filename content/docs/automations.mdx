@@ -1,0 +1,68 @@
+---
+title: Automations
+description: Create event-driven workflows that respond to changes in your Shard data
+---
+
+Automations allow you to create event-driven workflows that automatically execute actions when data in your Shard tables changes. They use user-defined rules to match specific conditions and can trigger multiple actions - like webhooks.
+
+## How Automations Work
+
+Automations monitor changes to your Shard tables and execute when:
+
+1. **A row is inserted or updated** in a specified table
+2. **The data matches your predicate** (filtering condition)
+3. **The automation is enabled**
+
+When these conditions are met, the automation executes all configured actions in sequence.
+
+### Key Components
+
+- **Source Table**: The table to monitor for changes
+- **Predicate**: A JSON Logic expression that filters which rows trigger the automation
+- **Triggers**: Choose whether to run on inserts, updates, or both
+- **Actions**: One or more tasks to execute (webhooks, create rows, etc.)
+- **Execution History**: View logs of every automation run with status and details
+
+## Creating an Automation
+
+### In the Shard UI
+
+1. **Navigate to your Shard** and open a table. From the control bar go **More** -> **Automations**
+2. **Click "New" to create a new automation**
+3. **Configure the basics**:
+   - **Name**: Give your automation a descriptive name
+   - **Triggers**: Enable "On Insert" and/or "On Update" based on when you want it to run. You can also Enable/Disable the automation from here.
+4. **Build your conditions** using the visual query builder:
+   - Add rules to match specific field values
+   - Combine rules with AND/OR logic
+   - Use operators like equals, contains, greater than, etc.
+   - Example: `status = "pending" AND priority > 5`
+5. **Add actions** that should execute when the predicate matches:
+   - **Webhook**: Send HTTP requests to external endpoints
+     - Configure URL, method (GET/POST/PUT/etc.), headers
+     - Choose what data to send: just the row, full context, or custom payload
+   - **More coming soon**
+
+6. **Enable the automation** and click **Save**
+
+### Example Use Cases
+
+- **Webhook notification**: When a new user signs up (`on_insert`), send their data to your CRM via webhook
+- **Status tracking**: When an order status changes to "shipped" (`on_update`), create a tracking record in another table
+- **Alert system**: When an error log with `severity = "critical"` is created, trigger a webhook to your alerting service
+- **Data pipeline**: Automatically transform and copy data between tables based on conditions
+
+## Monitoring Executions
+
+Each automation execution is logged with:
+
+- **Status**: `ok` (succeeded), `skipped` (didn't match predicate), or `failed` (error occurred)
+- **Actions Ran**: How many actions were executed
+- **Execution Log**: Detailed output including which actions succeeded/failed and any error messages
+- **Timestamps**: When the execution started and completed
+
+View execution history from the Automations tab to debug issues and monitor performance.
+
+## Integrations
+
+Automations can currently integrate with any external service that accepts webhooks. We are working on adding more direct integrations. Have something you want to see? Let us know in [Github Discussions](https://github.com/shardlabs/web/discussions).

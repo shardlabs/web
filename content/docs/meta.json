@@ -1,0 +1,20 @@
+{
+  "title": "Framework",
+  "description": "The docs framework",
+  "icon": "Building",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "---Using Shard---",
+    "tables",
+    "automations",
+    "charts",
+    "export",
+    "---Billing---",
+    "billing",
+    "---Policy---",
+    "terms",
+    "privacy"
+  ]
+}
