@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./pricing-table.module.css";
 import { Link } from "react-router";
+import styles from "./pricing-table.module.css";
 
 interface PricingFeature {
   text: string;
@@ -99,7 +99,14 @@ export const PricingTable: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={styles.ctaButton}>{plan.cta}</button>
+              <button
+                className={styles.ctaButton}
+                data-fast-goal="pricing_plan_clicked"
+                data-fast-goal-price={plan.price}
+                data-fast-goal-plan-type={plan.name}
+              >
+                {plan.cta}
+              </button>
             </Link>
           </div>
         </div>
