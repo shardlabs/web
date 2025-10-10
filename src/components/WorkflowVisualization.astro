@@ -1,0 +1,642 @@
+---
+// Astro component frontmatter
+---
+
+<div class="workflow-container" id="workflow-visualization">
+    <!-- Form Card -->
+    <div class="workflow-card form-card" data-active="false">
+        <div class="card-header">
+            <div class="card-title">Waitlist Form</div>
+            <div class="card-badge">Form</div>
+        </div>
+        <div class="form-content">
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        id="name-input"
+                        readonly
+                        placeholder="Enter name"
+                    />
+                </div>
+                <div class="form-field">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="email-input"
+                        readonly
+                        placeholder="Enter email"
+                    />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Company Size</label>
+                    <input
+                        type="number"
+                        id="company-size-input"
+                        readonly
+                        placeholder="# of employees"
+                    />
+                </div>
+                <button class="submit-btn" id="submit-btn" disabled>
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="workflow-card table-card" data-active="false">
+        <div class="card-header">
+            <div class="card-title">Entries</div>
+            <div class="card-badge">Table</div>
+        </div>
+        <div class="table-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody id="entries-tbody">
+                    <tr>
+                        <td colspan="3" class="empty-state">
+                            No entries yet
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Automation Card -->
+    <div class="workflow-card automation-card" data-active="false">
+        <div class="card-header">
+            <div class="card-title">Automation Triggered</div>
+            <div class="card-badge">Automation</div>
+        </div>
+        <div class="automation-content">
+            <div class="automation-rule">
+                <div class="rule-label">IF</div>
+                <div class="rule-condition">Company Size > 500</div>
+            </div>
+            <div class="automation-action">
+                <div class="rule-label">THEN</div>
+                <div class="rule-condition">Send Slack Message</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Popup -->
+    <div
+        class="notification-popup"
+        id="notification-popup"
+        style="display: none;"
+    >
+        <div class="notification-header">
+            <span class="notification-icon">💬</span>
+            <span class="notification-title">Slack Message</span>
+        </div>
+        <div class="notification-body" id="notification-body">
+            <strong>New Enterprise Lead!</strong>
+            <br />
+            <span id="notification-text"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // TypeScript interfaces for client-side script
+    interface FormData {
+        name: string;
+        email: string;
+        companySize: number;
+    }
+
+    const mockEntries: FormData[] = [
+        { name: 'Sarah Chen', email: 'sarah@techcorp.com', companySize: 750 },
+        { name: 'Mike Johnson', email: 'mike@startup.io', companySize: 45 },
+        {
+            name: 'Emily Rodriguez',
+            email: 'emily@enterprise.com',
+            companySize: 1200,
+        },
+        { name: 'David Kim', email: 'david@smallbiz.co', companySize: 15 },
+        { name: 'Alex Thompson', email: 'alex@megacorp.com', companySize: 850 },
+    ];
+
+    // State variables
+    let currentEntry: FormData | null = null;
+    let tableEntries: FormData[] = [];
+    let showAutomation = false;
+    let animationStage: 'form' | 'table' | 'automation' | 'idle' = 'idle';
+    let formProgress = 0;
+    let currentMockIndex = 0;
+
+    // DOM elements
+    const formCard = document.querySelector('.form-card') as HTMLElement;
+    const tableCard = document.querySelector('.table-card') as HTMLElement;
+    const automationCard = document.querySelector(
+        '.automation-card'
+    ) as HTMLElement;
+    const nameInput = document.getElementById('name-input') as HTMLInputElement;
+    const emailInput = document.getElementById(
+        'email-input'
+    ) as HTMLInputElement;
+    const companySizeInput = document.getElementById(
+        'company-size-input'
+    ) as HTMLInputElement;
+    const submitBtn = document.getElementById(
+        'submit-btn'
+    ) as HTMLButtonElement;
+    const entriesTbody = document.getElementById(
+        'entries-tbody'
+    ) as HTMLTableSectionElement;
+    const notificationPopup = document.getElementById(
+        'notification-popup'
+    ) as HTMLElement;
+    const notificationText = document.getElementById(
+        'notification-text'
+    ) as HTMLElement;
+
+    function updateFormInputs() {
+        nameInput.value = formProgress > 20 ? currentEntry?.name || '' : '';
+        emailInput.value = formProgress > 50 ? currentEntry?.email || '' : '';
+        companySizeInput.value =
+            formProgress > 80
+                ? currentEntry?.companySize?.toString() || ''
+                : '';
+        submitBtn.disabled = formProgress < 100;
+        submitBtn.textContent = formProgress === 100 ? '✓ Submitted' : 'Submit';
+    }
+
+    function updateTableEntries() {
+        if (tableEntries.length === 0) {
+            entriesTbody.innerHTML = `
+        <tr>
+          <td colspan="3" class="empty-state">No entries yet</td>
+        </tr>
+      `;
+        } else {
+            entriesTbody.innerHTML = tableEntries
+                .map(
+                    (entry, idx) => `
+          <tr ${idx === 0 && animationStage === 'table' ? 'data-highlight="true"' : ''}>
+            <td>${entry.name}</td>
+            <td class="email-cell">${entry.email}</td>
+            <td>${entry.companySize}</td>
+          </tr>
+        `
+                )
+                .join('');
+        }
+    }
+
+    function updateAnimationStage() {
+        // Reset all cards
+        formCard.setAttribute('data-active', 'false');
+        tableCard.setAttribute('data-active', 'false');
+        automationCard.setAttribute('data-active', 'false');
+
+        // Set active card
+        switch (animationStage) {
+            case 'form':
+                formCard.setAttribute('data-active', 'true');
+                break;
+            case 'table':
+                tableCard.setAttribute('data-active', 'true');
+                break;
+            case 'automation':
+                automationCard.setAttribute('data-active', 'true');
+                break;
+        }
+    }
+
+    function updateNotification() {
+        if (showAutomation && currentEntry) {
+            notificationPopup.style.display = 'block';
+            notificationText.textContent = `${currentEntry.name} from a company with ${currentEntry.companySize} employees just signed up.`;
+        } else {
+            notificationPopup.style.display = 'none';
+        }
+    }
+
+    async function runCycle() {
+        // Reset states
+        animationStage = 'idle';
+        showAutomation = false;
+        currentEntry = null;
+        formProgress = 0;
+
+        updateAnimationStage();
+        updateFormInputs();
+        updateNotification();
+
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        // Stage 1: Fill form
+        animationStage = 'form';
+        const entry = mockEntries[currentMockIndex];
+        updateAnimationStage();
+
+        // Animate form filling
+        for (let i = 0; i <= 100; i += 10) {
+            formProgress = i;
+            updateFormInputs();
+            await new Promise((resolve) => setTimeout(resolve, 150));
+        }
+
+        currentEntry = entry;
+        updateFormInputs();
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        // Stage 2: Add to table
+        animationStage = 'table';
+        tableEntries = [entry, ...tableEntries.slice(0, 2)];
+        updateAnimationStage();
+        updateTableEntries();
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+
+        // Stage 3: Show automation if enterprise
+        if (entry.companySize > 500) {
+            animationStage = 'automation';
+            showAutomation = true;
+            updateAnimationStage();
+            updateNotification();
+            await new Promise((resolve) => setTimeout(resolve, 2500));
+        } else {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+
+        // Move to next entry
+        currentMockIndex = (currentMockIndex + 1) % mockEntries.length;
+    }
+
+    // Start the animation cycle
+    document.addEventListener('DOMContentLoaded', () => {
+        runCycle();
+        setInterval(runCycle, 8000);
+    });
+</script>
+
+<style>
+    /* Workflow Visualization Styles */
+    .workflow-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        min-width: 440px;
+        padding: 20px;
+        flex-shrink: 0;
+        margin-right: 120px;
+    }
+
+    /* Workflow cards */
+    .workflow-card {
+        background: rgba(20, 20, 30, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(111, 202, 255, 0.2);
+        border-radius: 12px;
+        padding: 15px;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease;
+        position: relative;
+        opacity: 0.7;
+        z-index: 5;
+    }
+
+    .workflow-card[data-active='true'] {
+        opacity: 1;
+        border-color: rgba(111, 202, 255, 0.8);
+        box-shadow: 0 0 30px rgba(111, 202, 255, 0.3);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(111, 202, 255, 0.2);
+    }
+
+    .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .card-badge {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        background: rgba(111, 202, 255, 0.2);
+        border: 1px solid rgba(111, 202, 255, 0.4);
+        border-radius: 12px;
+        color: #6fcaff;
+        font-weight: 500;
+    }
+
+    /* Form Card */
+    .form-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+    }
+
+    .form-field label {
+        font-size: 0.8rem;
+        color: #aaa;
+        font-weight: 500;
+    }
+
+    .form-field input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(111, 202, 255, 0.3);
+        border-radius: 6px;
+        padding: 8px 12px;
+        color: #fff;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-field input:focus {
+        outline: none;
+        border-color: #6fcaff;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .submit-btn {
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #6fcaff, #4a9fd8);
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        height: fit-content;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(111, 202, 255, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Table Card */
+
+    .table-content {
+        overflow: hidden;
+    }
+
+    .table-content table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-content th {
+        text-align: left;
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6fcaff;
+        border-bottom: 1px solid rgba(111, 202, 255, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    :global(.table-content td) {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        color: #ddd;
+        border-bottom: 1px solid rgba(111, 202, 255, 0.1);
+    }
+
+    :global(.table-content tr[data-highlight='true']) {
+        background: rgba(111, 202, 255, 0.1);
+        animation: highlightRow 0.8s ease;
+    }
+
+    @keyframes highlightRow {
+        0%,
+        100% {
+            background: rgba(111, 202, 255, 0.05);
+        }
+        50% {
+            background: rgba(111, 202, 255, 0.2);
+        }
+    }
+
+    :global(.email-cell) {
+        font-size: 0.8rem;
+        color: #999;
+    }
+
+    :global(.empty-state) {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 20px !important;
+    }
+
+    /* Automation Card */
+
+    .automation-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .automation-rule {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        background: rgba(111, 202, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(111, 202, 255, 0.2);
+    }
+
+    .rule-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #6fcaff;
+        padding: 4px 8px;
+        background: rgba(111, 202, 255, 0.2);
+        border-radius: 4px;
+    }
+
+    .rule-condition {
+        font-size: 0.85rem;
+        color: #ddd;
+        font-family: 'Courier New', monospace;
+    }
+
+    .automation-arrow {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #6fcaff;
+    }
+
+    .automation-action {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        background: rgba(111, 202, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(111, 202, 255, 0.2);
+    }
+
+    .notification-popup {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        left: 30px;
+        padding: 16px;
+        background: linear-gradient(
+            135deg,
+            rgba(111, 202, 255, 0.15),
+            rgba(74, 159, 216, 0.15)
+        );
+        backdrop-filter: blur(10px);
+        border: 2px solid #6fcaff;
+        border-radius: 10px;
+        animation:
+            slideInFromRight 0.5s ease,
+            pulse 2s ease infinite;
+        box-shadow: 0 8px 24px rgba(111, 202, 255, 0.3);
+        z-index: 1000;
+    }
+
+    @keyframes slideInFromRight {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse {
+        0%,
+        100% {
+            box-shadow: 0 8px 24px rgba(111, 202, 255, 0.3);
+        }
+        50% {
+            box-shadow: 0 8px 32px rgba(111, 202, 255, 0.5);
+        }
+    }
+
+    .notification-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .notification-icon {
+        font-size: 1.2rem;
+    }
+
+    .notification-title {
+        font-weight: 700;
+        color: #6fcaff;
+        font-size: 0.9rem;
+    }
+
+    .notification-body {
+        font-size: 0.85rem;
+        color: #ddd;
+        line-height: 1.5;
+    }
+
+    .notification-body strong {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1500px) {
+        .workflow-container {
+            min-width: 420px;
+            margin-right: 60px;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .workflow-container {
+            margin-right: 0;
+            min-width: 100%;
+            max-width: 600px;
+            padding: 0;
+        }
+
+        .notification-popup {
+            right: 20px;
+            bottom: 20px;
+            width: 320px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .workflow-container {
+            gap: 20px;
+            max-width: 100%;
+        }
+
+        .workflow-card {
+            padding: 12px;
+        }
+
+        .card-header {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .form-row {
+            flex-direction: column;
+            gap: 8px;
+
+            .form-field {
+                width: 100%;
+            }
+        }
+
+        .submit-btn {
+            width: 100%;
+        }
+
+        .notification-popup {
+            display: none;
+        }
+    }
+</style>

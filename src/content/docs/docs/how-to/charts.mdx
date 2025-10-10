@@ -1,0 +1,183 @@
+---
+title: Charts
+description: Create visualizations to analyze your Shard data
+---
+
+Charts help you visualize your Shard data with interactive line graphs. Create charts to monitor trends, track metrics over time, and gain insights from your tables.
+
+**Note**: Currently, only **Line Charts** are supported. Additional chart types (bar, pie, map) are coming soon.
+
+## Creating a Line Chart
+
+### Step 1: Open a New Chart
+
+1. **Click the Charts icon** in the left sidebar
+2. **Click "New"** to create a new chart
+3. You'll see the chart creation interface
+
+### Step 2: Choose Your Visualization
+
+When creating a new chart, you'll see visualization options:
+
+- **Line** - Shows trends over time (currently supported)
+- **Bar** - Compares quantities (coming soon)
+- **Pie** - Shows proportions (coming soon)
+- **Map** - Displays geographical data (coming soon)
+
+**Click "Line"** and then **"Next"** to continue.
+
+### Step 3: Configure Your Chart
+
+**Set a Title**:
+- Enter a descriptive title like "Requests over time" or "User signups by day"
+- This appears at the top of your chart
+
+**Add Data Series**:
+
+A series is a line on your chart. You can add multiple series to compare different data sources.
+
+1. **Click "Add series"** to create your first series
+2. **Configure each series**:
+   - **Label**: Name for this line (e.g., "Active users")
+   - **Table**: Which table to pull data from
+   - **X axis**: Column for horizontal axis (usually time/date)
+   - **Y axis**: Column for vertical axis (the value to plot)
+   - **Max points**: Limit how many data points to display (default: 10,000)
+   - **Filter**: Optional rules to filter which rows to include
+
+3. **Add more series** if you want to compare multiple metrics on the same chart
+
+### Step 4: Save Your Chart
+
+1. **Click "Save chart"** at the bottom
+2. Your chart will render with the configured data
+3. The chart appears in the Charts list and can be opened anytime
+
+## Working with Charts
+
+### Viewing a Chart
+
+Once created, your chart displays:
+
+- **Title** at the top
+- **Legend** showing all series names
+- **Interactive graph** where you can hover to see exact values
+- **Live/Idle toggle** to control real-time updates
+- **Edit button** to modify the chart configuration
+
+### Live Mode
+
+Toggle **Live mode** in the bottom toolbar:
+
+- **Live** (green indicator): Chart refreshes every 60 seconds with new data
+- **Idle** (gray indicator): Chart is frozen and won't auto-refresh
+
+Live mode is useful for monitoring real-time metrics like request counts or active sessions.
+
+### Editing a Chart
+
+1. **Open the chart** from the Charts sidebar
+2. **Click "Edit"** in the bottom-right corner
+3. **Modify** the title, series, or filters
+4. **Click "Save changes"** to update the chart
+
+### Deleting a Chart
+
+Charts can be deleted from the Charts sidebar by right-clicking on a chart and selecting "Delete" (feature may vary based on UI implementation).
+
+## Chart Series Configuration
+
+### Choosing the Right Fields
+
+**X Axis (Horizontal)**:
+- Typically a **time or date column** (e.g., `created_at`, `timestamp`)
+- Can also be sequential IDs or any ordered value
+- Shard automatically detects whether to use time-based or value-based scaling
+
+**Y Axis (Vertical)**:
+- The **metric you want to track** (e.g., `count`, `total`, `revenue`)
+- Numeric columns work best
+- Text columns will be ignored or cause errors
+
+### Using Filters
+
+Filters let you narrow down which rows appear in your chart:
+
+1. **Click "Add rule"** in the Filter section
+2. **Select a column** to filter by
+3. **Choose an operator** (equals, greater than, contains, etc.)
+4. **Enter a value** to match
+5. **Combine rules** with AND/OR logic
+
+**Example**: Only show data where `status = "completed"` AND `priority > 5`
+
+### Max Points Limit
+
+The **Max points** setting controls how many data points are fetched:
+
+- **Higher values** = more detail, but slower loading
+- **Lower values** = faster rendering, less detail
+- **Default**: 10,000 points (good for most use cases)
+
+If your table has millions of rows, consider using filters or reducing max points for better performance.
+
+## Multiple Series
+
+You can overlay multiple lines on one chart to compare trends:
+
+**Example Use Cases**:
+- Compare **new users** vs **active users** over time
+- Track **requests** and **errors** on the same timeline
+- Show **revenue** from different product categories
+
+Each series can pull from:
+- **Different tables**
+- **Different columns**
+- **Different time ranges** (via filters)
+
+All series share the same X and Y axis scales for easy comparison.
+
+## Tips for Better Charts
+
+**Choose descriptive names**: Label your series clearly so others can understand them
+
+**Use consistent time intervals**: If plotting time-based data, ensure your X axis column has regular timestamps
+
+**Filter out noise**: Use filters to exclude test data, outliers, or irrelevant rows
+
+**Start simple**: Create a basic chart first, then add complexity with additional series and filters
+
+**Check your data types**: Ensure Y axis columns are numeric (integers or decimals)
+
+**Use Live mode wisely**: Only enable it when monitoring real-time data to avoid unnecessary resource usage
+
+## Common Issues
+
+**Chart shows no data**:
+- Verify your table has rows matching your filters
+- Check that X and Y axis columns exist and have values
+- Ensure Y axis values are numeric
+
+**Chart looks jagged or sparse**:
+- Your data might have gaps in the X axis timeline
+- Consider increasing the max points limit
+- Check if filters are too restrictive
+
+**Chart won't save**:
+- At least one complete series is required (table, X axis, and Y axis must all be set)
+- Ensure you have a valid shard selected
+
+## Example: Creating a Request Count Chart
+
+1. **Create a chart** and select Line type
+2. **Set title**: "API Requests Over Time"
+3. **Add series**:
+   - Label: "Requests"
+   - Table: `api_logs`
+   - X axis: `timestamp`
+   - Y axis: `request_count`
+   - Max points: 5000
+   - Filter: `status = 200` (only successful requests)
+4. **Save** and watch your request trends over time!
+
+You now have a live dashboard showing API request volume with automatic updates every minute when Live mode is enabled.

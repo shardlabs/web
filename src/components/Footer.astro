@@ -1,0 +1,157 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="/icon.svg" alt="Shard Logo" class="footer-logo" />
+                <span class="brand-name">Shard</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="/blog">Blog</a>
+                <a href="/docs">Docs</a>
+                <a href="/docs/policy/terms">Terms</a>
+                <a href="/docs/policy/privacy">Privacy</a>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-location">
+                Built in San Francisco, California
+            </div>
+            <div class="footer-copyright">
+                &copy; {year} Shard. All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(5, 0, 5, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 48px 40px 32px 40px;
+    }
+
+    .footer-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 32px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-logo {
+        height: 32px;
+        width: 32px;
+    }
+
+    .brand-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .footer-nav {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+    }
+
+    .footer-nav a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.2s ease;
+        position: relative;
+    }
+
+    .footer-nav a:hover {
+        color: #6fcaff;
+    }
+
+    .footer-nav a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #6fcaff;
+        transition: width 0.2s ease;
+    }
+
+    .footer-nav a:hover::after {
+        width: 100%;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .footer-location {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 400;
+    }
+
+    .footer-copyright {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 400;
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            padding: 32px 20px 24px 20px;
+        }
+
+        .footer-top {
+            flex-direction: column;
+            gap: 24px;
+            padding-bottom: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-nav a {
+            font-size: 0.875rem;
+        }
+
+        .footer-bottom {
+            flex-direction: column-reverse;
+            text-align: center;
+            gap: 12px;
+        }
+
+        .footer-location,
+        .footer-copyright {
+            font-size: 0.8rem;
+        }
+    }
+</style>

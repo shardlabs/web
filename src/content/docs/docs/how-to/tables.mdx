@@ -1,0 +1,170 @@
+---
+title: Tables
+description: Learn how to create and manage tables in Shard.
+---
+
+Tables in Shard are SQLite tables that store your data. They provide a familiar spreadsheet-like interface for viewing, editing, and managing structured data with full SQL capabilities under the hood.
+
+## What are Shard Tables?
+
+Each table in Shard is a standard SQLite table with:
+
+- **Typed columns** that support various data types (text, integer, real, blob)
+- **SQL query support** for complex filtering and operations
+- **Real-time updates** when running in "Live" mode
+
+Tables are the foundation for most Shard features like automations, forms, and charts.
+
+## Creating Tables
+
+### Creating a New Table
+
+1. **Open the Tables sidebar** by clicking the tables icon in the left panel
+2. **Click "New"** in the top-right corner
+3. **Enter a table name** (e.g., `users`, `orders`, `events`)
+4. **Click "Create"**
+
+Your new table will appear in the tables list and automatically open in a new panel.
+
+### Importing from CSV
+
+1. **Open the Tables sidebar**
+2. **Click "Import CSV"**
+3. **Select your CSV file**
+4. **Choose import options**:
+   - Create a new table from the CSV structure
+   - Append to an existing table
+   - Map CSV columns to table columns
+5. **Click "Import"**
+
+## Working with Table Data
+
+### The Table Panel
+
+When you open a table, you'll see a spreadsheet-like interface with:
+
+- **Toolbar** at the top with actions and controls
+- **Column headers** showing field names
+- **Data grid** with rows and cells
+- **Selection checkboxes** for bulk operations
+- **Pagination controls** to navigate through data
+
+### Adding Rows
+
+1. **Click the "+ Add Row" button** in the toolbar
+2. A **new empty row** appears at the top of the table
+3. **Click into any cell** to start entering data
+4. **Press Tab** to move to the next cell
+5. **Click outside the cell or press Enter** to confirm the value
+6. **Click "Save Changes"** when done to persist the new row
+
+### Editing Cells
+
+1. **Click on any cell** to begin editing
+2. **Type your new value** in the input field
+3. **Click outside the cell or press Enter** to confirm
+4. **Changed cells are highlighted** to show unsaved modifications
+5. **The toolbar shows a badge** indicating the number of pending changes
+6. **Click "Save Changes"** to commit all edits at once
+7. **Click "Discard Changes"** to revert all unsaved modifications
+
+**Note**: Changes are tracked locally until you explicitly save them. This allows you to make multiple edits and save them as a batch.
+
+### Deleting Rows
+
+**Delete a single row:**
+1. **Right-click on a row** to open the context menu
+2. **Select "Delete row"**
+3. **Confirm the deletion** in the dialog
+
+**Delete multiple rows:**
+1. **Check the boxes** next to the rows you want to delete
+2. **Click the trash icon** in the selection menu that appears
+3. **Confirm the deletion** when prompted
+
+### Managing Columns
+
+**Add a new column:**
+1. **Click the menu (⋮)** in the toolbar
+2. **Select "New Column"**
+3. **Enter the column name and type**
+4. **Click "Add"**
+
+**Rename a column:**
+1. **Click the menu (⋮)** on a column header
+2. **Select "Rename Column"**
+3. **Enter the new name**
+4. **Click "Rename"**
+
+**Delete a column:**
+1. **Click the menu (⋮)** on a column header
+2. **Select "Delete Column"**
+3. **Confirm the deletion** (this cannot be undone)
+
+## Pagination
+
+Tables are paginated to improve performance with large datasets:
+
+- **Page size**: 100 rows per page by default
+- **Navigation**: Use the **← Previous** and **Next →** buttons in the toolbar
+- **Page indicator**: Shows the current range (e.g., "1–100 of 5,432")
+- **Automatic loading**: The next page loads when you click "Next"
+
+You can navigate through thousands of rows efficiently without loading all data at once.
+
+## Live Mode
+
+Toggle **Live mode** in the toolbar to control real-time updates:
+
+- **Live** (green indicator): The table automatically refreshes to show new data as it arrives
+- **Idle** (gray indicator): The table is frozen at the current state and won't update
+
+Live mode is useful when monitoring feeds or automations that continuously insert data.
+
+## Filtering Data
+
+1. **Click the filter icon** in the toolbar
+2. **Build filter rules** using the visual query builder:
+   - Select a column
+   - Choose an operator (equals, contains, greater than, etc.)
+   - Enter a value to match
+3. **Combine multiple rules** with AND/OR logic
+4. **Click "Apply"** to filter the table
+5. **Click the filter icon again** to clear filters
+
+Filters use SQL `WHERE` clauses under the hood for efficient querying.
+
+## Selection and Bulk Actions
+
+- **Select individual rows** by checking their checkboxes
+- **Select all rows** on the current page using the header checkbox
+- When rows are selected, a **selection menu appears** with bulk actions:
+  - **Delete selected rows**
+  - **Clear selection**
+
+## Advanced Features
+
+### Table Menu Actions
+
+Click the **⋮ menu** in the toolbar for additional options:
+
+- **New Column**: Add a new field to the table
+- **Import CSV**: Bulk import data from a CSV file
+- **Automations**: View and create automations for this table
+- **Delete Table**: Permanently remove the table (requires confirmation)
+
+### Automations Integration
+
+Tables can trigger automations when rows are inserted or updated. See the [Automations documentation](/docs/automations) for details on creating event-driven workflows.
+
+### SQL Queries
+
+While the table panel provides a visual interface, you can also query tables directly using SQL in the Query panel. All standard SQLite syntax is supported.
+
+## Tips and Best practices
+
+- **Use descriptive column names** (e.g., `user_email` instead of `e`)
+- **Choose appropriate data types** for efficient storage and querying
+- **Save changes frequently** to avoid losing edits
+- **Add indexes** (via SQL) for columns you filter or join frequently
+- **Back up important data** before bulk delete operations

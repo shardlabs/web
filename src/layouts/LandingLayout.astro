@@ -1,0 +1,47 @@
+---
+import '../styles/reset.css';
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        />
+        <link rel="icon" href="/icon.svg" type="image/x-icon" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Shard.sh</title>
+        <script
+            defer
+            data-website-id="dfid_Y8Ni6eBgNDS55m1LIsWER"
+            data-domain="shard.sh"
+            src="/js/script.js"></script>
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
+
+<style is:global>
+    body {
+        background: #050005;
+        color: #ffffff;
+        position: relative;
+        font-family: 'Inter', sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font-family: 'Inter', sans-serif;
+    }
+</style>

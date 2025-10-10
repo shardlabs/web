@@ -1,0 +1,345 @@
+---
+import PricingTable from '../components/PricingTable.astro';
+import WorkflowVisualization from '../components/WorkflowVisualization.astro';
+import Footer from '../components/Footer.astro';
+import LandingLayout from '../layouts/LandingLayout.astro';
+import '../styles/reset.css';
+---
+
+<LandingLayout>
+    <div class="landing-wrapper">
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="content">
+                    <div class="introducing">
+                        <img src="/icon.svg" alt="Shard Logo" class="logo" />
+                        Introducing Shard
+                    </div>
+
+                    <span class="primary">Your data, your rules</span>
+
+                    <span class="secondary">
+                        <strong>Shard is your personal database.</strong> Create
+                        forms, automate workflows, and integrate with your favorite
+                        tools &mdash; easily.
+                    </span>
+
+                    <div class="actions">
+                        <a href="https://app.shard.sh">
+                            <!-- ArrowRightIcon -->
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M5 12h14M13 5l7 7-7 7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
+                            </svg>
+                            Open Shard
+                        </a>
+                        <a href="/docs">
+                            <!-- BookIcon -->
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"></path>
+                                <path
+                                    d="M20 22V6a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 6.5V22"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"></path>
+                            </svg>
+                            Read Docs
+                        </a>
+                    </div>
+                </div>
+
+                <!-- React islands (render the React components in Astro) -->
+                <WorkflowVisualization />
+            </div>
+        </section>
+
+        <section class="pricing-section">
+            <h2 class="h2">Simple, affordable pricing.</h2>
+            <h3 class="h3">Free during our early access period</h3>
+            <PricingTable />
+        </section>
+
+        <Footer />
+    </div>
+</LandingLayout>
+
+<style>
+    .landing-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .h2 {
+            color: #fff;
+            font-weight: 600;
+            font-size: 3rem;
+            line-height: 4rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+    }
+
+    .landing-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/hero_gradient.webp') right -400px no-repeat;
+        animation: fadeInBackground 3s ease-in;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .landing-wrapper > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    @keyframes fadeInBackground {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .hero-section {
+        /* Position image center right at natural size, no repeat */
+        /* background: url('/hero_gradient.webp') right center no-repeat; */
+        height: 100vh;
+        min-height: 100vh;
+        width: 100vw;
+        gap: 60px;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 20px;
+        box-sizing: border-box;
+
+        .hero-content {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 100px;
+            height: 100%;
+            max-width: 1800px;
+        }
+
+        .content {
+            max-width: 800px;
+            width: 100%;
+            flex-shrink: 0;
+
+            .introducing {
+                align-items: center;
+                display: inline-flex;
+                font-size: 0.875rem;
+                border: 1px solid #444;
+                border-radius: 15px;
+                padding: 5px 15px;
+                font-weight: 500;
+                color: #aaa;
+
+                .logo {
+                    margin-right: 8px;
+                    height: 18px;
+                }
+            }
+
+            .logo {
+                height: 20px;
+            }
+
+            .primary {
+                display: block;
+                font-size: 4rem;
+                line-height: 6rem;
+                font-weight: 600;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+                background: linear-gradient(0deg, #6fcaff, #ffffff);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+
+            .secondary {
+                font-size: 1.6rem;
+                font-weight: 500;
+                line-height: 2.2rem;
+
+                background: linear-gradient(90deg, #fff, #aaa);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+
+                strong {
+                    font-weight: 700;
+                }
+            }
+
+            .actions {
+                align-items: center;
+                display: flex;
+                gap: 10px;
+                margin-top: 30px;
+
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 12px 16px;
+                    background-color: #fff;
+                    border: none;
+                    color: #222;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    font-weight: 500;
+
+                    img {
+                        filter: invert(1);
+                    }
+
+                    &:hover {
+                        background-color: #fff;
+                        color: #222;
+                    }
+
+                    &:nth-child(2) {
+                        background: none;
+                        color: #fff;
+                        border: 1px solid transparent;
+
+                        &:hover {
+                            border: 1px solid #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .pricing-section {
+        max-width: 1200px;
+        width: 100%;
+        margin: 100px auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1500px) {
+        .hero-section .hero-content {
+            padding: 0 60px;
+
+            .content {
+                max-width: 500px;
+            }
+        }
+
+        .hero-section .content .primary {
+            font-size: 3rem;
+            line-height: 3.5rem;
+            margin: 10px 0;
+        }
+
+        .hero-section .content .secondary {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .hero-section {
+            height: auto;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .hero-section .hero-content {
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 60px 40px;
+            gap: 60px;
+            max-width: 800px;
+        }
+
+        .hero-section .hero-content .content {
+            max-width: 100%;
+        }
+
+        .hero-section .content .primary {
+            font-size: 3rem;
+        }
+
+        .hero-section .content .secondary {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            background-position: -1400px -100px;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .hero-section .hero-content {
+            padding: 40px 20px;
+            gap: 40px;
+
+            .content {
+                margin: 20px 0;
+            }
+        }
+
+        .hero-section .content .primary {
+            font-size: 2.5rem;
+            line-height: 3rem;
+        }
+
+        .hero-section .content .secondary {
+            font-size: 1.1rem;
+        }
+
+        .hero-section .content .actions {
+            a {
+                font-size: 0.875rem;
+            }
+        }
+    }
+</style>

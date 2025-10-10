@@ -1,0 +1,210 @@
+---
+import LandingLayout from '../layouts/LandingLayout.astro';
+import '../styles/reset.css';
+---
+
+<LandingLayout>
+    <div class="error-wrapper">
+        <div class="error-content">
+            <div class="logo-section">
+                <img src="/icon.svg" alt="Shard Logo" class="logo" />
+            </div>
+
+            <h1 class="error-title">404</h1>
+            <p class="error-message">Page not found</p>
+            <p class="error-description">
+                The page you're looking for doesn't exist or has been moved.
+            </p>
+
+            <div class="actions">
+                <a href="/docs">
+                    <!-- BookIcon -->
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"></path>
+                        <path
+                            d="M20 22V6a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 6.5V22"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"></path>
+                    </svg>
+                    Read Docs
+                </a>
+                <a href="/">
+                    <!-- HomeIcon -->
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <polyline
+                            points="9,22 9,12 15,12 15,22"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></polyline>
+                    </svg>
+                    Go Home
+                </a>
+            </div>
+        </div>
+    </div>
+</LandingLayout>
+
+<style>
+    .error-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .error-content {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .logo-section {
+        margin-bottom: 40px;
+    }
+
+    .logo {
+        height: 60px;
+        width: auto;
+    }
+
+    .error-title {
+        font-size: 6rem;
+        font-weight: 600;
+        margin: 0 0 20px 0;
+        background: linear-gradient(0deg, #6fcaff, #ffffff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        line-height: 1.1;
+    }
+
+    .error-message {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 0 0 15px 0;
+    }
+
+    .error-description {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #aaa;
+        margin: 0 0 40px 0;
+        line-height: 1.6;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .actions a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 20px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        color: #222;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .actions a:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-1px);
+    }
+
+    .actions a:nth-child(2) {
+        background: none;
+        color: #fff;
+        border: 1px solid #444;
+    }
+
+    .actions a:nth-child(2):hover {
+        border: 1px solid #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .error-title {
+            font-size: 4rem;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .actions {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .actions a {
+            width: 100%;
+            max-width: 250px;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .error-title {
+            font-size: 3rem;
+        }
+
+        .error-message {
+            font-size: 1.3rem;
+        }
+
+        .logo {
+            height: 40px;
+        }
+    }
+</style>

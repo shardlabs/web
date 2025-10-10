@@ -1,0 +1,372 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+// getStaticPaths defines available routes for all posts
+export async function getStaticPaths() {
+    const posts = await getCollection('blog');
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+// receive the post prop for the given slug
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BlogLayout
+    title={post.data.title}
+    description={post.data.description}
+    image={post.data.image}
+    author={post.data.author}
+    publishDate={post.data.date}
+    tags={post.data.tags}
+>
+    <article class="blog-post">
+        {
+            post.data.image && (
+                <div class="post-hero-image">
+                    <img
+                        src={post.data.image}
+                        alt={post.data.imageAlt || post.data.title}
+                    />
+                </div>
+            )
+        }
+
+        <div class="post-header">
+            <div class="post-meta">
+                <time datetime={post.data.date.toISOString()}>
+                    {
+                        post.data.date.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })
+                    }
+                </time>
+                {
+                    post.data.author && (
+                        <>
+                            <span class="separator">•</span>
+                            <span class="author">{post.data.author}</span>
+                        </>
+                    )
+                }
+            </div>
+            <h1 class="post-title">{post.data.title}</h1>
+            <p class="post-description">{post.data.description}</p>
+            {
+                post.data.tags && post.data.tags.length > 0 && (
+                    <div class="post-tags">
+                        {post.data.tags.map((tag) => (
+                            <span class="tag">{tag}</span>
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+
+        <div class="post-content">
+            <Content />
+        </div>
+
+        <div class="post-footer">
+            <a href="/blog" class="back-link">
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                </svg>
+                Back to blog
+            </a>
+        </div>
+    </article>
+</BlogLayout>
+
+<style>
+    .blog-post {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .post-hero-image {
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 16px;
+        margin-bottom: 40px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .post-hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .post-header {
+        margin-bottom: 48px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 16px;
+    }
+
+    .separator {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .author {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+    }
+
+    .post-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 16px 0;
+        line-height: 1.2;
+        background: linear-gradient(135deg, #6fcaff, #ffffff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .post-description {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+        margin: 0 0 20px 0;
+    }
+
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(111, 202, 255, 0.1);
+        border: 1px solid rgba(111, 202, 255, 0.3);
+        border-radius: 12px;
+        font-size: 0.8rem;
+        color: #6fcaff;
+        font-weight: 500;
+    }
+
+    .post-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* Markdown content styling */
+    .post-content :global(h2) {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 48px 0 20px 0;
+        line-height: 1.3;
+    }
+
+    .post-content :global(h3) {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 36px 0 16px 0;
+        line-height: 1.3;
+    }
+
+    .post-content :global(h4) {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 28px 0 12px 0;
+        line-height: 1.3;
+    }
+
+    .post-content :global(p) {
+        margin: 0 0 24px 0;
+    }
+
+    .post-content :global(ul),
+    .post-content :global(ol) {
+        margin: 0 0 24px 0;
+        padding-left: 24px;
+    }
+
+    .post-content :global(li) {
+        margin-bottom: 8px;
+    }
+
+    .post-content :global(a) {
+        color: #6fcaff;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(111, 202, 255, 0.3);
+        transition: border-color 0.2s ease;
+    }
+
+    .post-content :global(a:hover) {
+        border-bottom-color: #6fcaff;
+    }
+
+    .post-content :global(code) {
+        background: rgba(111, 202, 255, 0.1);
+        border: 1px solid rgba(111, 202, 255, 0.2);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        color: #6fcaff;
+    }
+
+    .post-content :global(pre) {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        overflow-x: auto;
+        margin: 0 0 24px 0;
+    }
+
+    .post-content :global(pre code) {
+        background: none;
+        border: none;
+        padding: 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+    }
+
+    .post-content :global(blockquote) {
+        border-left: 4px solid #6fcaff;
+        padding-left: 20px;
+        margin: 0 0 24px 0;
+        color: rgba(255, 255, 255, 0.7);
+        font-style: italic;
+    }
+
+    .post-content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 24px 0;
+    }
+
+    .post-content :global(hr) {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 48px 0;
+    }
+
+    .post-content :global(table) {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 24px 0;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .post-content :global(th),
+    .post-content :global(td) {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .post-content :global(th) {
+        background: rgba(111, 202, 255, 0.1);
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .post-content :global(td) {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .post-footer {
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #6fcaff;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: gap 0.2s ease;
+    }
+
+    .back-link:hover {
+        gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+        .post-hero-image {
+            height: 250px;
+            margin-bottom: 32px;
+        }
+
+        .post-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+        }
+
+        .post-title {
+            font-size: 2rem;
+        }
+
+        .post-description {
+            font-size: 1.1rem;
+        }
+
+        .post-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .post-content :global(h2) {
+            font-size: 1.5rem;
+            margin: 32px 0 16px 0;
+        }
+
+        .post-content :global(h3) {
+            font-size: 1.25rem;
+            margin: 24px 0 12px 0;
+        }
+
+        .post-content :global(h4) {
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .post-footer {
+            margin-top: 48px;
+            padding-top: 24px;
+        }
+    }
+</style>
