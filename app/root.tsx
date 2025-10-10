@@ -32,6 +32,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          defer
+          data-website-id="dfid_Y8Ni6eBgNDS55m1LIsWER"
+          data-domain="shard.sh"
+          src="https://datafa.st/js/script.js"
+        ></script>
       </head>
       <body className="flex flex-col min-h-screen">
         <RootProvider search={{ enabled: false }}>{children}</RootProvider>
