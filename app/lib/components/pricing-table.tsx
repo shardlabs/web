@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
+import { ArrowRightIcon } from "lucide-react";
 import styles from "./pricing-table.module.css";
 
 interface PricingFeature {
@@ -69,48 +70,70 @@ const plans: PricingPlan[] = [
 
 export const PricingTable: React.FC = () => {
   return (
-    <div className={styles.pricingContainer}>
-      {plans.map((plan) => (
-        <div key={plan.name} className={styles.pricingCard}>
-          <div className={styles.cardHeader}>
-            <h3 className={styles.planName}>{plan.name}</h3>
-            <div className={styles.priceContainer}>
-              <span className={styles.currency}>$</span>
-              <span className={styles.price}>{plan.price}</span>
-            </div>
-            {plan.period && <div className={styles.period}>{plan.period}</div>}
-            {plan.billingNote && (
-              <div className={styles.billingNote}>{plan.billingNote}</div>
-            )}
-            {plan.tagline && (
-              <div className={styles.tagline}>{plan.tagline}</div>
-            )}
-          </div>
-          <div className={styles.cardBody}>
-            <ul className={styles.featureList}>
-              {plan.features.map((feature, index) => (
-                <li key={index} className={styles.feature}>
-                  {feature.text}
-                </li>
-              ))}
-            </ul>
-            <Link
-              to="https://app.shard.sh"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button
-                className={styles.ctaButton}
-                data-fast-goal="pricing_plan_clicked"
-                data-fast-goal-price={plan.price}
-                data-fast-goal-plan-type={plan.name}
-              >
-                {plan.cta}
-              </button>
-            </Link>
-          </div>
+    <div className={styles.pricingWrapper}>
+      <div className={styles.earlyAccessOverlay}>
+        <div className={styles.overlayContent}>
+          <span className={styles.cornerBottomLeft}></span>
+          <span className={styles.cornerBottomRight}></span>
+          <h3 className={styles.overlayTitle}>Free During Early Access</h3>
+          <p className={styles.overlayMessage}>
+            Get started now at no cost. We'll notify you well before any pricing changes take effect.
+          </p>
+          <Link
+            to="https://app.shard.sh"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className={styles.overlayCtaButton}>
+              <ArrowRightIcon size={18} />
+              Get Started
+            </button>
+          </Link>
         </div>
-      ))}
+      </div>
+      <div className={styles.pricingContainer}>
+        {plans.map((plan) => (
+          <div key={plan.name} className={styles.pricingCard}>
+            <div className={styles.cardHeader}>
+              <h3 className={styles.planName}>{plan.name}</h3>
+              <div className={styles.priceContainer}>
+                <span className={styles.currency}>$</span>
+                <span className={styles.price}>{plan.price}</span>
+              </div>
+              {plan.period && <div className={styles.period}>{plan.period}</div>}
+              {plan.billingNote && (
+                <div className={styles.billingNote}>{plan.billingNote}</div>
+              )}
+              {plan.tagline && (
+                <div className={styles.tagline}>{plan.tagline}</div>
+              )}
+            </div>
+            <div className={styles.cardBody}>
+              <ul className={styles.featureList}>
+                {plan.features.map((feature, index) => (
+                  <li key={index} className={styles.feature}>
+                    {feature.text}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="https://app.shard.sh"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  className={styles.ctaButton}
+                  data-fast-goal="pricing_plan_clicked"
+                  data-fast-goal-price={plan.price}
+                  data-fast-goal-plan-type={plan.name}
+                >
+                  {plan.cta}
+                </button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
