@@ -44,7 +44,7 @@ export default function Home() {
       </section>
       <section className="pricing-section">
         <h2 className="h2">Simple, affordable pricing.</h2>
-        <h3 className="h3">Try it out for 7 days, free</h3>
+        <h3 className="h3">Free during our early access period</h3>
         <PricingTable />
       </section>
       <footer className="footer-section">
