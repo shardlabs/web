@@ -66,6 +66,7 @@ export default defineConfig({
                     footerText: '',
                 }),
             ],
+            customCss: ['./src/styles/docs.css'],
         }),
         react(),
         mdx(),
