@@ -1,0 +1,36 @@
+---
+title: SQL Editor
+description: Run ad‑hoc SQL queries against your shard’s database right from the UI
+---
+
+The SQL Editor lets you run arbitrary SQL against your shard’s database and inspect the results without leaving Shard. It’s ideal for quick lookups, debugging, and maintenance queries.
+
+## Open the SQL Editor
+
+- From the left sidebar, click the database icon labeled "SQL Editor" to open a new SQL panel.
+- A new tab titled "SQL Editor" will appear in your workspace.
+
+## Run a query
+
+1. Enter a SQL statement in the editor pane. A starter example is provided, e.g.:
+   - `SELECT * FROM your_table LIMIT 10;`
+2. Click "Run Query" (play icon) to execute.
+3. Results appear in the lower section:
+   - For SELECT statements, results are rendered in a read‑only grid.
+   - For INSERT/UPDATE/DELETE and other non‑SELECT statements, an info banner shows rows affected and/or the last insert ID.
+
+### Errors
+
+If a query fails, an error banner shows the message. Your SQL remains in the editor so you can revise and re‑run.
+
+## Tips
+
+- You must select a shard before running queries.
+- The grid columns are derived from the first row’s keys, so return consistent shapes when possible.
+- The internal `_iid` column is reserved and used as the row identifier in result grids.
+
+## Notes & limits
+
+- Queries execute against your shard via the API; use caution with destructive statements.
+- Long‑running queries cannot currently be cancelled from the UI.
+- Results are view‑only in this panel (no inline editing).

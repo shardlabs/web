@@ -1,0 +1,67 @@
+---
+title: Forms (MVP)
+description: Build simple data‑entry forms mapped directly to a table in your shard
+---
+
+Forms let you build Microsoft Access‑style forms for data entry. Today, each form targets a single table with a 1:1 mapping to columns. Soon, forms will be shareable and fillable outside your workspace for things like questionnaires and waitlists.
+
+## What you can do today
+
+- Create and edit forms tied to a single table
+- Configure fields, validations, and required flags
+- Choose common input types (text, number, email, tel, url, password, textarea, checkbox, radio, select)
+- Reorder fields and manage select/radio options
+- Enable/disable the form and customize the submission success message
+- Submit data through the form; new records are written to the target table
+
+## Open the Forms panel
+
+- From the left sidebar, click the book icon to open the Forms drawer.
+- Open an existing form or create a new one. A "Form" panel tab will open.
+
+## Create a new form
+
+1. With a shard selected, open the Forms panel and choose New.
+2. Fill in Basic Information:
+   - Name (required)
+   - Optional description
+   - Target Table (required)
+3. Add form fields:
+   - Label (required)
+   - Field Type (required): text, number, password, email, tel, url, textarea, checkbox, radio, select
+   - Target Column (required): column in the selected table (system column `_iid` is excluded)
+   - Optional placeholder and validation (min, max, minLength, maxLength, pattern)
+   - Required toggle
+   - For radio/select, add at least one option (label + value)
+   - Reorder fields with Up/Down controls; remove fields with the trash icon
+4. Settings:
+   - Form enabled: toggle availability
+   - Allow duplicate submissions from same IP
+   - Success message shown after submit
+5. Click Save to create the form.
+
+## Edit vs. Preview
+
+- Preview: see the end‑user experience and submit test data
+- Edit: change the schema and settings; click Update Form to save
+- If a form has no fields yet, the panel auto‑switches to Edit to guide setup
+
+## Submitting data
+
+- In Preview, fill out the form and click Submit
+- Required fields are validated client‑side; missing values show a toast message
+- On success, you’ll see the configured success message and can “Submit another response”
+- The target table is updated via the API, and related table views in the UI automatically refresh
+
+## Current limitations
+
+- 1:1 mapping with a single table per form
+- No external sharing yet (coming soon)
+- Advanced logic (conditionals, branching) not yet available
+- File uploads and multi‑table writes are not supported
+
+## Coming soon
+
+- Public share links and embeddable forms
+- Conditional logic and computed fields
+- Additional actions (e.g., automations on submit)
