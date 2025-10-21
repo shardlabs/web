@@ -42,7 +42,7 @@ A series is a line on your chart. You can add multiple series to compare differe
    - **Table**: Which table to pull data from
    - **X axis**: Column for horizontal axis (usually time/date)
    - **Y axis**: Column for vertical axis (the value to plot)
-   - **Max points**: Limit how many data points to display (default: 10,000)
+   - **Max points**: Limit how many data points to display (default and maximum: 200)
    - **Filter**: Optional rules to filter which rows to include
 
 3. **Add more series** if you want to compare multiple metrics on the same chart
@@ -115,11 +115,10 @@ Filters let you narrow down which rows appear in your chart:
 
 The **Max points** setting controls how many data points are fetched:
 
-- **Higher values** = more detail, but slower loading
-- **Lower values** = faster rendering, less detail
-- **Default**: 10,000 points (good for most use cases)
+- Shard enforces a limit of 200 points per series to ensure responsive charts
+- Use filters (time ranges, predicates) to focus on the most relevant data
 
-If your table has millions of rows, consider using filters or reducing max points for better performance.
+If your table has many rows, consider tightening your filters to keep the visualization clear and fast.
 
 ## Multiple Series
 
@@ -176,7 +175,7 @@ All series share the same X and Y axis scales for easy comparison.
    - Table: `api_logs`
    - X axis: `timestamp`
    - Y axis: `request_count`
-   - Max points: 5000
+   - Max points: 200
    - Filter: `status = 200` (only successful requests)
 4. **Save** and watch your request trends over time!
 

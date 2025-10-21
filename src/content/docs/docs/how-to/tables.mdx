@@ -3,13 +3,13 @@ title: Tables
 description: Learn how to create and manage tables in Shard.
 ---
 
-Tables in Shard are SQLite tables that store your data. They provide a familiar spreadsheet-like interface for viewing, editing, and managing structured data with full SQL capabilities under the hood.
+Tables in Shard are Postgres tables that store your data. They provide a familiar spreadsheet-like interface for viewing, editing, and managing structured data with full SQL capabilities under the hood.
 
 ## What are Shard Tables?
 
-Each table in Shard is a standard SQLite table with:
+Each table in Shard is a standard Postgres table with:
 
-- **Typed columns** that support various data types (text, integer, real, blob)
+- **Typed columns** that support common Postgres data types (text, integer, numeric/decimal, boolean, timestamp, jsonb)
 - **SQL query support** for complex filtering and operations
 - **Real-time updates** when running in "Live" mode
 
@@ -159,7 +159,7 @@ Tables can trigger automations when rows are inserted or updated. See the [Autom
 
 ### SQL Queries
 
-While the table panel provides a visual interface, you can also query tables directly using SQL in the Query panel. All standard SQLite syntax is supported.
+While the table panel provides a visual interface, you can also query tables directly using SQL in the SQL Editor. Shard uses the Postgres SQL dialect.
 
 ## Tips and Best practices
 

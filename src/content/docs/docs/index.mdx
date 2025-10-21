@@ -5,13 +5,13 @@ description: A 30 second intro to Shard
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Shard is a new kind of data workspace: part terminal, part dashboard, part playground. It combines the power of SQLite databases with a modern visual interface for managing tables, creating automations, and building charts.
+Shard is a new kind of data workspace: part terminal, part dashboard, part playground. It pairs managed Postgres databases (one per Shard) with a modern visual interface for managing tables, creating automations, and building charts. You can provision a cloud shard or bring your own Postgres soon.
 
 ## What is Shard?
 
 Shard gives you a flexible environment to:
 
-- **Store and manage data** in SQLite tables with a spreadsheet-like interface
+- **Store and manage data** in Postgres tables with a spreadsheet-like interface
 - **Automate workflows** with event-driven rules that respond to data changes
 - **Visualize trends** using interactive charts and dashboards
 - **Query directly** with full SQL support when you need it
@@ -23,10 +23,10 @@ Think of it as your personal data workspace—whether you're prototyping an app,
 Here are some of the features you can explore:
 
 <CardGrid >
-<LinkCard href="/docs/how-to/tables"  title="Tables" description='Create and manage SQLite tables with a visual interface. Add rows, edit cells, paginate through data, and filter with a query builder.' />
+<LinkCard href="/docs/how-to/tables"  title="Tables" description='Create and manage tables with a visual interface. Add rows, edit cells, paginate through data, and filter with a query builder. Backed by Postgres.' />
 <LinkCard href="/docs/how-to/automations"  title="Automations" description='Build event-driven workflows that trigger actions when your data changes. Send webhooks, create rows, and chain complex logic using visual rules.' />
 <LinkCard href="/docs/how-to/charts"  title="Charts" description='Visualize your data with line charts. Track metrics over time, compare multiple series, and monitor trends in real-time.' />
-<LinkCard href="/docs/how-to/export"  title="Export" description='Back up your entire Shard as a SQL file. Export your data at any time for safekeeping or migration.' />
+<LinkCard href="/docs/how-to/export"  title="Export" description='Back up your entire Shard as a Postgres‑compatible SQL file. Export your data at any time for safekeeping or migration.' />
 
 </CardGrid>
 ## Documentation Status

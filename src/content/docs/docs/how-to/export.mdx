@@ -3,7 +3,7 @@ title: Export
 description: Export your Shard data
 ---
 
-You can export your entire Shard as a SQL file at any time. This creates a complete backup of all your tables, data, and schema that can be imported into any SQLite-compatible database.
+You can export your entire Shard as a SQL file at any time. This creates a complete backup of all your tables, data, and schema that can be imported into any Postgres‑compatible database.
 
 ## How to Export
 
@@ -26,13 +26,13 @@ The export includes:
 - All table schemas (column names, types, constraints)
 - All row data from every table
 - Indexes and other database objects
-- SQLite-compatible SQL statements
+- Postgres‑compatible SQL statements
 
 ## Using Your Export
 
 The exported `.sql` file can be imported into:
 
 - Another Shard instance
-- SQLite command-line tools (`sqlite3 database.db < export.sql`)
+- Postgres command‑line tools (for example: `psql "$CONNECTION_URL" -f export.sql`)
 - Database management applications
-- Any SQLite-compatible system
+- Any Postgres‑compatible system

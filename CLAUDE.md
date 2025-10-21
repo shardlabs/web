@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Shard is a marketing/documentation website for the Shard product - a data workspace combining SQLite databases with a modern visual interface for managing tables, creating automations, and building charts. This repository contains the static documentation and landing site built with Astro.
+Shard is a marketing/documentation website for the Shard product — a data workspace pairing per‑shard Postgres databases with a modern visual interface for managing tables, creating automations, and building charts. This repository contains the static documentation and landing site built with Astro.
 
 The main product application is hosted at `https://app.shard.sh`, while this repo hosts `https://shard.sh`.
 

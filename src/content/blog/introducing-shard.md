@@ -1,10 +1,10 @@
 ---
 title: "Introducing Shard"
-date: "2025-10-11"
+date: "2025-10-21"
 description: "Introducing Shard"
 ---
 
-Shard is a new kind of data workspace — part terminal, part dashboard, part playground. It gives you the speed and reliability of SQLite with a clean, modern UI for building tables, automations, and simple charts without wiring up a full app.
+Shard is a new kind of data workspace — part terminal, part dashboard, part playground. It pairs managed Postgres databases (one per Shard) with a clean, modern UI for building tables, automations, and simple charts without wiring up a full app.
 
 We’re launching Shard in Early Access. During this period, Shard is completely free to use. We’re moving fast, listening closely, and shaping the roadmap with your feedback.
 
@@ -12,7 +12,7 @@ We’re launching Shard in Early Access. During this period, Shard is completely
 
 At its core, Shard is a lightweight database workspace that makes it easy to:
 
-- Create and manage data in SQLite tables with a spreadsheet-like interface
+- Create and manage data in Postgres tables with a spreadsheet-like interface
 - Automate workflows with event-driven rules that respond to inserts and updates
 - Visualize trends with simple line charts
 - Drop down to full SQL whenever you need precision and power
@@ -23,10 +23,10 @@ If you’ve ever wished you could get a “just right” stack for internal tool
 
 You can use Shard right now to build practical, production-friendly workflows:
 
-- Tables: Create tables, add columns, edit cells inline, paginate through large datasets, and import CSVs. See: [/docs/tables](/docs/tables)
-- Automations: Run actions when rows are inserted or updated using JSON-logic predicates; send webhooks and more. See: [/docs/automations](/docs/automations)
-- Charts: Build lightweight line charts to monitor key metrics, with a Live mode for periodic refresh. See: [/docs/charts](/docs/charts)
-- Export: One-click export of your entire Shard to a portable SQL file. See: [/docs/export](/docs/export)
+- Tables: Create tables, add columns, edit cells inline, paginate through large datasets, and import CSVs. See: [/docs/how-to/tables](/docs/how-to/tables)
+- Automations: Run actions when rows are inserted or updated using JSON-logic predicates; send webhooks and more. See: [/docs/how-to/automations](/docs/how-to/automations)
+- Charts: Build lightweight line charts to monitor key metrics, with a Live mode for periodic refresh. See: [/docs/how-to/charts](/docs/how-to/charts)
+- Export: One-click export of your entire Shard to a Postgres-compatible SQL file. See: [/docs/how-to/export](/docs/how-to/export)
 
 It’s fast, ergonomic, and built for real-world data work.
 
