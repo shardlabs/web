@@ -1,0 +1,43 @@
+<div
+    class="unicorn-embed"
+    data-us-project="pSeD8D2KVdHkJI2eKcki"
+    data-us-scale="1"
+    data-us-dpi="1.5"
+    data-us-lazyload="true"
+    data-us-alttext="Shard"
+    data-us-arialabel="Shard logo animation"
+>
+</div>
+<script>
+    window.UnicornStudio.init().catch((err) => {
+        console.error(err);
+    });
+</script>
+
+<style>
+    .unicorn-embed {
+        width: 800px;
+        height: 800px;
+
+        /* max width 1800px make embed smaller */
+        @media (max-width: 1800px) {
+            width: 600px;
+            height: 600px;
+        }
+
+        @media (max-width: 1300px) {
+            width: 500px;
+            height: 500px;
+        }
+
+        @media (max-width: 600px) {
+            width: 300px;
+            height: 300px;
+        }
+
+        @media (max-width: 400px) {
+            width: 200px;
+            height: 200px;
+        }
+    }
+</style>

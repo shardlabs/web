@@ -1,7 +1,7 @@
 ---
-import PricingTable from '../components/PricingTable.astro';
-import WorkflowVisualization from '../components/WorkflowVisualization.astro';
 import Footer from '../components/Footer.astro';
+import PricingTable from '../components/PricingTable.astro';
+import ShardDither from '../components/ShardDither.astro';
 import LandingLayout from '../layouts/LandingLayout.astro';
 import '../styles/reset.css';
 ---
@@ -16,12 +16,13 @@ import '../styles/reset.css';
                         Introducing Shard
                     </div>
 
-                    <span class="primary">Your data, your rules</span>
+                    <span class="primary">Mission control for your data</span>
 
                     <span class="secondary">
-                        <strong>Shard is your personal database.</strong> Create
-                        forms, automate workflows, and integrate with your favorite
-                        tools &mdash; easily.
+                        <strong>Shard is your personal dashboard.</strong> Transform,
+                        manage, and explore your data in a fast, terminal‑style workspace.
+                        Build forms, run automations, and connect your stack in one
+                        place.
                     </span>
 
                     <div class="actions">
@@ -69,8 +70,7 @@ import '../styles/reset.css';
                     </div>
                 </div>
 
-                <!-- React islands (render the React components in Astro) -->
-                <WorkflowVisualization />
+                <ShardDither />
             </div>
         </section>
 
@@ -118,6 +118,7 @@ import '../styles/reset.css';
         animation: fadeInBackground 3s ease-in;
         z-index: 0;
         pointer-events: none;
+        opacity: 0.7;
     }
 
     .landing-wrapper > * {
@@ -130,7 +131,7 @@ import '../styles/reset.css';
             opacity: 0;
         }
         to {
-            opacity: 1;
+            opacity: 0.7;
         }
     }
 
@@ -186,10 +187,11 @@ import '../styles/reset.css';
 
             .primary {
                 display: block;
-                font-size: 4rem;
-                line-height: 6rem;
+                font-size: 3.6rem;
+                line-height: 4.6rem;
                 font-weight: 600;
                 text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                margin: 10px 0;
 
                 background: linear-gradient(0deg, #6fcaff, #ffffff);
                 background-clip: text;
@@ -291,10 +293,10 @@ import '../styles/reset.css';
         }
 
         .hero-section .hero-content {
-            flex-direction: column;
+            flex-direction: column-reverse;
             justify-content: flex-start;
             padding: 60px 40px;
-            gap: 60px;
+            gap: 0;
             max-width: 800px;
         }
 
